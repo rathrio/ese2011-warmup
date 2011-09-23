@@ -1,0 +1,23 @@
+package warmupTests;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import warmup.*;
+
+public class CalendarTest {
+	
+	private Calender cal;
+	
+	@Before
+	public void init() {
+		owner = new User("Dani");
+		cal = new Calendar(owner, "Home");
+	}
+	
+	@Test
+	public void shouldAddEvent() {
+		PriorityList<Event> events = 
+	}
+
+}

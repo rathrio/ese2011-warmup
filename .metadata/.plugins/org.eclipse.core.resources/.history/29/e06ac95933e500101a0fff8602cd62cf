@@ -1,0 +1,32 @@
+import java.util.Date;
+
+
+public class Event implements Comparable<Event>{
+	
+	private String name;
+	private Date startDate;
+	private Date endDate;
+	private boolean isPublic;
+	
+	
+	public Event(String name, Date startDate, Date endDate) {
+		this.name = name;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.isPublic = false;
+	}
+	
+	public void share() {
+		this.isPublic = true;
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+
+	@Override
+	public int compareTo(Event otherEvent) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}

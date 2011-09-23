@@ -1,0 +1,43 @@
+package warmup;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.PriorityQueue;
+
+
+public class Calendar {
+	
+	private String name;
+	private PriorityQueue<Event> events;
+	private User owner;
+	private SimpleDateFormat simpleDateFormat;
+	
+	public Calendar(User owner, String name) {
+		this.owner = owner;
+		this.name = name;
+		this.events = new PriorityQueue<Event>();
+		this.simpleDateFormat = new SimpleDateFormat("dd.MM.yy @ hh:mm");
+	}
+	
+	public void addEvent(Event event) {
+		this.events.add(event);
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+
+	public PriorityQueue<Event> getEvents() {
+		return this.events;
+	}
+	
+	public void printDate(Date date) {
+		System.out.println("today is: " + simpleDateFormat.format(date));
+	}
+	
+	public static void main(String[] args) {
+		Date now = new Date();
+		Calendar cal = new Calendar(new User("Danie"), "home");
+		cal.printDate(now);
+	}
+
+}

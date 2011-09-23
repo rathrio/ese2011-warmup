@@ -1,0 +1,16 @@
+import java.util.List;
+import java.util.PriorityQueue;
+
+
+public class Calendar {
+	
+	private String name;
+	private PriorityQueue<Event> events;
+	private User owner;
+	
+	public Calendar(User owner, String name) {
+		this.owner = owner;
+		this.name = name;
+	}
+
+}

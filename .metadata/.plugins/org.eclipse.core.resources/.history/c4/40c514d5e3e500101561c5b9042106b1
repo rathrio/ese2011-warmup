@@ -1,0 +1,32 @@
+package warmup;
+
+import java.util.Date;
+
+public class User {
+	
+	private String name;
+	private Calendar cal;
+	
+	public User(String name) {
+		this.name = name;
+		this.cal = new Calendar(this, "Home");
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public Calendar getCal() {
+		return this.cal;
+	}
+	
+	public void getEventInfos() {
+		String startDate = getDateInput();
+		String endDate = getDateInput();
+	}
+
+	private String getDateInput() {
+		return null;
+	}
+
+}

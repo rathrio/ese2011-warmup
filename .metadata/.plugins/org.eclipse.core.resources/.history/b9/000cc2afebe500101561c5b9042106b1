@@ -1,0 +1,52 @@
+package warmup;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.PriorityQueue;
+
+
+public class Calendar {
+	
+	private String name;
+	private PriorityQueue<Event> events;
+	private User owner;
+	private SimpleDateFormat simpleDateFormatter;
+	
+	public Calendar(User owner, String name) {
+		this.owner = owner;
+		this.name = name;
+		this.events = new PriorityQueue<Event>();
+		this.simpleDateFormatter = new SimpleDateFormat("dd.MM.yy kk:mm");
+	}
+	
+	public void addEvent(String eventName, String startDate, String endDate) {
+		Date stD = null;
+		Date enD = null;
+		try {
+			stD = simpleDateFormatter.parse(startDate);
+			enD = simpleDateFormatter.parse(endDate);
+		} catch (ParseException e) {
+			System.out.println(e.toString());
+		}
+		Event newEvent = new Event(eventName, stD, enD);
+		this.events.add(newEvent);
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+
+	public ArrayList<Event> getEvents() {
+		return new ArrayList<Event>(this.events);
+	}
+
+	public boolean isEmpty() {
+		return this.events.isEmpty();
+	}
+
+	public Object getNextEvent() {
+		return this.events.peek();
+	}
+	
+}

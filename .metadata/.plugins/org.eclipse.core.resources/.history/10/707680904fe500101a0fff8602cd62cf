@@ -1,0 +1,15 @@
+import java.util.List;
+
+
+public class Calendar {
+	
+	private String name;
+	private List<Event> events;
+	private User owner;
+	
+	public Calendar(User owner, String name) {
+		this.owner = owner;
+		this.name = name;
+	}
+
+}

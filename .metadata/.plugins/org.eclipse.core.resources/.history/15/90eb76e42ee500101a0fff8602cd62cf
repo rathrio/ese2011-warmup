@@ -1,0 +1,21 @@
+import java.util.Date;
+
+
+public class Event {
+	
+	private String name;
+	private Date startDate;
+	
+	
+	public Event(String name, Date startDate) {
+		this.name = name;
+		this.startDate = startDate;
+	}
+	
+	public static void main(String[] args) {
+		Date now = new Date();
+		Event lunch = new Event("lunch", now);
+		System.out.println(now);
+		
+	}
+}

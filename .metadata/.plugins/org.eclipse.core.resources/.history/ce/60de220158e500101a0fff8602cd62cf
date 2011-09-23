@@ -1,0 +1,20 @@
+import java.util.PriorityQueue;
+
+
+public class Calendar {
+	
+	private String name;
+	private PriorityQueue<Event> events;
+	private User owner;
+	
+	public Calendar(User owner, String name) {
+		this.owner = owner;
+		this.name = name;
+		this.events = new PriorityQueue<Event>();
+	}
+	
+	public void addEvent(Event event) {
+		
+	}
+
+}

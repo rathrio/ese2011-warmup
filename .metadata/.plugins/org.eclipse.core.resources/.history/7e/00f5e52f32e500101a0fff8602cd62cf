@@ -1,0 +1,11 @@
+
+public class Calendar {
+	
+	private String name;
+	
+	
+	public Calendar(String name) {
+		this.name = name;
+	}
+
+}

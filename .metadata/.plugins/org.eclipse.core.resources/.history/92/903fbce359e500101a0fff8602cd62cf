@@ -1,0 +1,21 @@
+package warmupTests;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import warmup.*;
+
+public class CalendarTest {
+	
+	@Before
+	public void init() {
+		User owner = new User("Dani");
+		Calendar cal = new Calendar(owner, "Home");
+	}
+	
+	@Test
+	public void shouldAddEvent() {
+		
+	}
+
+}

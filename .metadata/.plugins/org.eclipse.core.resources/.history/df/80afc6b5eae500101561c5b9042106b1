@@ -1,0 +1,46 @@
+package warmupTests;
+
+import static org.junit.Assert.*;
+
+import java.util.Date;
+import java.util.PriorityQueue;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import warmup.*;
+
+public class CalendarTest {
+	
+	private Calendar cal;
+	private User owner;
+	private PriorityQueue<Event> events;
+	
+	@Before
+	public void init() {
+		owner = new User("Dani");
+		cal = owner.getCal();
+		events = cal.getEvents();
+	}
+	
+	@Test
+	public void shouldAddEvent() {
+		String eventName = "testEvent";
+		String startDate = "01.01.01 00:00";
+		String endDate = "02.02.02 12:12";
+		assertTrue(cal.isEmpty());
+		cal.addEvent(eventName, startDate, endDate);
+		assertFalse(cal.isEmpty());
+	}
+	
+	@Test
+	public void shouldAddSecondEventBeforeFirstEvent() {
+		assertTrue(cal.isEmpty());
+		String firstEventName = "firstEvent";
+		String firstStartDate = "01.01.01 12:00";
+		String firstEndDate = "01.01.01 13:00";
+		cal.addEvent(firstEventName, firstStartDate, firstEndDate);
+		assertEquals(this.events.size(), 1);
+	}
+
+}

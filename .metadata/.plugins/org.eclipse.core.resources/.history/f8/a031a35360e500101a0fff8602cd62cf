@@ -1,0 +1,48 @@
+package warmup;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
+public class Event implements Comparable<Event> {
+	
+	private String name;
+	private SimpleDateFormat startDate;
+	private SimpleDateFormat endDate;
+	private boolean isPublic;
+	
+	
+	public Event(String name, SimpleDateFormat startDate, SimpleDateFormat endDate) {
+		this.name = name;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.isPublic = false;
+	}
+	
+	public void share() {
+		this.isPublic = true;
+	}
+	
+	public void unshare() {
+		this.isPublic = false;
+	}
+	
+	public SimpleDateFormat getStartDate() {
+		return this.startDate;
+	}
+	
+	public SimpleDateFormat getEndDate() {
+		return this.endDate;
+	}
+	
+	@Override
+	public int compareTo(Event otherEvent) {
+		SimpleDateFormat otherStartDate = otherEvent.getStartDate();
+		if (s) {
+			return -1;
+		}
+		if (startDate.after(otherStartDate)) {
+			return 1;
+		}
+		return 0;
+	}
+}
