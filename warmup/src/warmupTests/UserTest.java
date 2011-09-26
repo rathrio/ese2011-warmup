@@ -20,7 +20,7 @@ public class UserTest {
 	@Before
 	public void init() {
 		this.calApp = new CalendarApplication();
-		this.testUser = new User("Simon", calApp);
+		this.testUser = new User("Simon");
 	}
 	
 	@Test

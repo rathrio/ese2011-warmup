@@ -12,17 +12,19 @@ public class CalendarApplication {
 	}
 
 	private void initUsers() {
+		//Initialized like this for testing purposes.
 		createNewUser("Dani");
 		createNewUser("Sepp");
 		createNewUser("Bruno");
 	}
 	
+	@ForTestingOnly
 	public ArrayList<User> getUsers() {
 		return this.users;
 	}
 	
 	public void createNewUser(String name) {
-		User newUser = new User(name, this);
+		User newUser = new User(name);
 		this.users.add(newUser);
 	}
 	

@@ -9,26 +9,16 @@ public class User {
 	
 	private String name;
 	private Calendar cal;
-	private CalendarApplication calApp;
 	private SimpleDateFormat simpleDateFormatter;
 	
-	public User(String name, CalendarApplication calendarApplication) {
+	public User(String name) {
 		this.name = name;
 		this.cal = new Calendar(this, "Home");
-		this.calApp = calendarApplication;
 		this.simpleDateFormatter = new SimpleDateFormat("dd.MM.yy kk:mm");
 	}
 	
-	public String toString() {
-		return this.name;
-	}
-	
-	public Calendar getCalendar() {
-		return this.cal;
-	}
-	
 	public void createEvent() {
-		String eventName = getEventName();
+		String eventName = getEventInput();
 		String strStartDate = getDateInput();
 		String strEndDate = getDateInput();
 		Date startDate = parseStringToDate(strStartDate);
@@ -66,6 +56,14 @@ public class User {
 		return visibleEvents;
 	}
 	
+	public String toString() {
+		return this.name;
+	}
+	
+	public Calendar getCalendar() {
+		return this.cal;
+	}
+	
 	@ForTestingOnly
 	public void shareCalendar() {
 		ArrayList<Event> events = cal.getEvents();
@@ -74,7 +72,7 @@ public class User {
 		}
 	}
 
-	private String getEventName() {
+	private String getEventInput() {
 		//TODO
 		return null;
 	}
@@ -83,6 +81,5 @@ public class User {
 		//TODO
 		return null;
 	}
-
 
 }

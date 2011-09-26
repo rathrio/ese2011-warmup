@@ -1,6 +1,5 @@
 package warmup;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
@@ -8,8 +7,8 @@ import java.util.PriorityQueue;
 public class Calendar implements Iterable<Event>{
 	
 	private String name;
-	private PriorityQueue<Event> events;
 	private User owner;
+	private PriorityQueue<Event> events;
 	
 	public Calendar(User owner, String name) {
 		this.owner = owner;
