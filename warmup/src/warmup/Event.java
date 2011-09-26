@@ -9,34 +9,54 @@ public class Event implements Comparable<Event> {
 	private String name;
 	private Date startDate;
 	private Date endDate;
-	private SimpleDateFormat simpleDateFormatter;
 	private boolean isPublic;
 	
 	
-	public Event(String name, String startDate, String endDate) {
+	public Event(String name, Date startDate, Date endDate) {
 		this.name = name;
-		this.simpleDateFormatter = new SimpleDateFormat("dd.MM.yy kk:mm");
-		this.startDate = parse(startDate);
-		this.endDate = parse(endDate);
+		this.startDate = startDate;
+		this.endDate = endDate;
 		this.isPublic = false;
 	}
 	
-	private Date parse(String strDate) {
-		Date date = null;
+	public boolean happensOn(Date date) {
+		Date day = parseToDay(date);
+		Date startDay = parseToDay(startDate);
+		Date endDay = parseToDay(endDate);
+		return startDay.equals(day) 
+				|| endDay.equals(day) 
+				|| (startDay.before(day) && endDay.after(day));
+	}
+	
+	private Date parseToDay(Date date) {
+		SimpleDateFormat dayFormatter = new SimpleDateFormat("ddMMyy");
+		String strDate = dayFormatter.format(date);
+		Date dayDate = null;
 		try {
-			date = simpleDateFormatter.parse(strDate);
+			dayDate = dayFormatter.parse(strDate);
 		} catch (ParseException e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
-		return date;
+		assert (dayDate != null);
+		return dayDate;
 	}
 
-	public void share() {
+	@Override
+	public int compareTo(Event otherEvent) {
+		Date otherStartDate = otherEvent.getStartDate();
+		return startDate.compareTo(otherStartDate);
+	}
+
+	public void setPublic() {
 		this.isPublic = true;
 	}
 	
-	public void unshare() {
+	public void setPrivate() {
 		this.isPublic = false;
+	}
+	
+	public boolean isPublic() {
+		return this.isPublic;
 	}
 	
 	public Date getStartDate() {
@@ -47,16 +67,8 @@ public class Event implements Comparable<Event> {
 		return this.endDate;
 	}
 	
-	@Override
-	public int compareTo(Event otherEvent) {
-		Date otherStartDate = otherEvent.getStartDate();
-		if (startDate.before(otherStartDate)) {
-			return -1;
-		}
-		if (startDate.after(otherStartDate)) {
-			return 1;
-		}
-		return 0;
+	public String getName() {
+		return this.name;
 	}
 	
 	public String toString() {
