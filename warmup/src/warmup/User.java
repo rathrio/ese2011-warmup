@@ -18,38 +18,28 @@ public class User {
 	}
 	
 	public void createEvent() {
-		String eventName = getEventInput();
-		String strStartDate = getDateInput();
-		String strEndDate = getDateInput();
-		Date startDate = parseStringToDate(strStartDate);
-		Date endDate = parseStringToDate(strEndDate);
+		String eventName = getStringInput();
+		Date startDate = getDateInput();
+		Date endDate = getDateInput();
+		boolean isPublic = getBooleanInput();
 		assert (startDate.before(endDate));
-		Event event = new Event(eventName, startDate, endDate);
+		Event event = new Event(eventName, startDate, endDate, isPublic);
 		cal.addEvent(event);
 	}
-	
-	@ForTestingOnly
-	public Date parseStringToDate(String strDate) {
-		Date date = null;
-		try {
-			date = simpleDateFormatter.parse(strDate);
-		} catch (ParseException e) {
-			System.out.println(e);
-		}
-		return date;
-	}
-	
-	public ArrayList<Event> getVisibleEventsFrom(User user, Date date) {
+
+	public ArrayList<Event> getVisibleEventsOnSpecificDayFrom(User user, Date date) {
+		Calendar cal = user.getCalendar();
 		ArrayList<Event> visibleEvents = new ArrayList<Event>();
-		ArrayList<Event> events = user.getCalendar().getEvents();
-		for (Event event : events) {
-			if (event.happensOn(date)) {
-				if (user.equals(this)) {
-					visibleEvents.add(event);
-				} else {
-					if (event.isPublic()) {
-						visibleEvents.add(event);
-					}
+		if (this.equals(user)) {
+			for (Event e : cal.getEvents()) {
+				if (e.happensOn(date)) {
+					visibleEvents.add(e);
+				}
+			}
+		} else {
+			for (Event e : cal.getPublicEvents()) {
+				if (e.happensOn(date)) {
+					visibleEvents.add(e);
 				}
 			}
 		}
@@ -64,22 +54,33 @@ public class User {
 		return this.cal;
 	}
 	
+	private boolean getBooleanInput() {
+		String input = ""; //implement input method for user interaction
+		return input.equalsIgnoreCase("y");
+	}
+
+	private String getStringInput() {
+		//TODO
+		String input = ""; //implement input method for user interaction
+		return input;
+	}
+
+	private Date getDateInput() {
+		//TODO
+		String input = ""; //implement input method for user interaction
+		Date inputDate = parseStringToDate(input);
+		return inputDate;
+	}
+	
 	@ForTestingOnly
-	public void shareCalendar() {
-		ArrayList<Event> events = cal.getEvents();
-		for (Event event : events) {
-			event.setPublic();
+	public Date parseStringToDate(String strDate) {
+		Date date = null;
+		try {
+			date = simpleDateFormatter.parse(strDate);
+		} catch (ParseException e) {
+			System.out.println(e);
 		}
-	}
-
-	private String getEventInput() {
-		//TODO
-		return null;
-	}
-
-	private String getDateInput() {
-		//TODO
-		return null;
+		return date;
 	}
 
 }

@@ -12,11 +12,11 @@ public class Event implements Comparable<Event> {
 	private boolean isPublic;
 	
 	
-	public Event(String name, Date startDate, Date endDate) {
+	public Event(String name, Date startDate, Date endDate, boolean isPublic) {
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.isPublic = false;
+		this.isPublic = isPublic;
 	}
 	
 	public boolean happensOn(Date date) {

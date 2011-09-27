@@ -1,5 +1,6 @@
 package warmup;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
@@ -9,14 +10,19 @@ public class Calendar implements Iterable<Event>{
 	private String name;
 	private User owner;
 	private PriorityQueue<Event> events;
+	private PriorityQueue<Event> publicEvents;
 	
 	public Calendar(User owner, String name) {
 		this.owner = owner;
 		this.name = name;
 		this.events = new PriorityQueue<Event>();
+		this.publicEvents = new PriorityQueue<Event>();
 	}
 	
 	public void addEvent(Event event) {
+		if (event.isPublic()) {
+			this.publicEvents.add(event);
+		}
 		this.events.add(event);
 	}
 	
@@ -39,10 +45,35 @@ public class Calendar implements Iterable<Event>{
 	public boolean isOwner(User user) {
 		return owner.equals(user);
 	}
+	
+	public ArrayList<Event> getPublicEvents() {
+		return new ArrayList<Event>(this.publicEvents);
+	}
 
 	@Override
 	public Iterator<Event> iterator() {
-		return this.events.iterator();
+		ArrayList<Event> orderedEvents = new ArrayList<Event>();
+		PriorityQueue<Event> events = new PriorityQueue<Event>(this.events);
+		while (!events.isEmpty()) {
+			orderedEvents.add(events.poll());
+		}
+		System.out.println(orderedEvents);
+		return orderedEvents.iterator();
+	}
+
+	public Iterator<Event> getEventsAfter(Date startingDate)  {
+		ArrayList<Event> iterableEvents = new ArrayList<Event>();
+		for (Event event : this.events) {
+			if (!event.getStartDate().before(startingDate)) {
+				iterableEvents.add(event);
+			}
+		}
+		System.out.println(iterableEvents.iterator());
+		return iterableEvents.iterator();
+	}
+
+	public Object getOwner() {
+		return this.owner;
 	}
 	
 }

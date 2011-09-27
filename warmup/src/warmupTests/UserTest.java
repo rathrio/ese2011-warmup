@@ -14,59 +14,95 @@ import warmup.*;
 
 public class UserTest {
 	
-	private CalendarApplication calApp;
-	private User testUser;
+	private User firstUser;
+	private User secondUser;
+	private Calendar firstCalendar;
+	private ArrayList<Event> eventsVisibleToSecondUser;
 	
 	@Before
 	public void init() {
-		this.calApp = new CalendarApplication();
-		this.testUser = new User("Simon");
+		this.firstUser = new User("firstUser");
+		this.secondUser = new User("secondUser");
+		this.firstCalendar = firstUser.getCalendar();
+		this.eventsVisibleToSecondUser = new ArrayList<Event>();
 	}
 	
 	@Test
 	public void shouldHaveAName() {
-		//this will not add the User to the calApp list of users
-		assertEquals("Simon", testUser.toString());
+		assertEquals("firstUser", firstUser.toString());
 	}
 	
 	@Test
 	public void shouldInitCalendar() {
-		assertFalse(testUser.getCalendar().equals(null));
+		assertFalse(firstUser.getCalendar().equals(null));
 	}
 	
 	@Test
 	public void shouldParseDateCorrectly() {
 		String strDate = "12.04.95 14:40";
-		Date date = testUser.parseStringToDate(strDate);
+		Date date = firstUser.parseStringToDate(strDate);
 		assertEquals("Wed Apr 12 14:40:00 CEST 1995", date.toString());
 	}
 	
-
-	public void shouldGetAllVisibleEventsFromOtherCalendar() {
-		User firstUser = calApp.getUsers().get(0);
-		User secondUser = calApp.getUsers().get(1);
-		Calendar firstCalendar = firstUser.getCalendar();
-		Date startDate1 = firstUser.parseStringToDate("24.09.11 13:00");
-		Date endDate1 = firstUser.parseStringToDate("24.09.11 17:00");
-		Date startDate2 = firstUser.parseStringToDate("24.09.11 21:35");
-		Date endDate2 = firstUser.parseStringToDate("25.09.11 02:30");
-		Date startDate3 = firstUser.parseStringToDate("25.09.11 14:00");
-		Date endDate3 = firstUser.parseStringToDate("25.09.11 18:00");
-		Event event1 = new Event("event1", startDate1, endDate1);
-		Event event2 = new Event("event2", startDate2, endDate2);
-		Event event3 = new Event("event3", startDate3, endDate3);
-		firstCalendar.addEvent(event1);
+	@Test
+	public void shouldNotGetPrivateEvent() {
+		Date startDate = firstUser.parseStringToDate("23.09.11 18:00");
+		Date endDate = firstUser.parseStringToDate("30.09.11 17:00");
+		Event event = new Event("event", startDate, endDate, false);
+		firstCalendar.addEvent(event);
+		Date testDay = secondUser.parseStringToDate("24.09.11 13:30");
+		eventsVisibleToSecondUser = secondUser.getVisibleEventsOnSpecificDayFrom(firstUser, testDay);
+		assertFalse(eventsVisibleToSecondUser.contains(event));
+	}
+	
+	@Test
+	public void shouldGetPublicEvent() {
+		Date startDate = firstUser.parseStringToDate("24.09.11 17:00");
+		Date endDate = firstUser.parseStringToDate("24.09.11 18:00");
+		Event event = new Event("event", startDate, endDate, true);
+		firstCalendar.addEvent(event);
+		Date testDay = secondUser.parseStringToDate("24.09.11 13:30");
+		eventsVisibleToSecondUser = secondUser.getVisibleEventsOnSpecificDayFrom(firstUser, testDay);
+		assertTrue(eventsVisibleToSecondUser.contains(event));
+	}
+	
+	@Test
+	public void shouldGetEventsOverMultipleDays() {
+		Date startDate = firstUser.parseStringToDate("22.09.11 17:00");
+		Date endDate = firstUser.parseStringToDate("26.09.11 18:00");
+		Event event = new Event("event", startDate, endDate, true);
+		firstCalendar.addEvent(event);
+		Date testDay = secondUser.parseStringToDate("24.09.11 13:30");
+		eventsVisibleToSecondUser = secondUser.getVisibleEventsOnSpecificDayFrom(firstUser, testDay);
+		assertTrue(eventsVisibleToSecondUser.contains(event));
+	}
+	
+	@Test
+	public void shouldNotGetEventOnOtherDate() {
+		Date startDate = firstUser.parseStringToDate("25.09.11 17:00");
+		Date endDate = firstUser.parseStringToDate("25.09.11 18:00");
+		Event event = new Event("event", startDate, endDate, true);
+		firstCalendar.addEvent(event);
+		Date testDay = secondUser.parseStringToDate("24.09.11 13:30");
+		eventsVisibleToSecondUser = secondUser.getVisibleEventsOnSpecificDayFrom(firstUser, testDay);
+		assertFalse(eventsVisibleToSecondUser.contains(event));
+		assertTrue(eventsVisibleToSecondUser.isEmpty());
+	}
+	
+	@Test
+	public void shouldGetEventPartiallyMatchingDay() {
+		Date startDate = firstUser.parseStringToDate("23.09.11 17:00");
+		Date endDate = firstUser.parseStringToDate("24.09.11 18:00");
+		Date startDate2 = firstUser.parseStringToDate("24.09.11 17:00");
+		Date endDate2 = firstUser.parseStringToDate("25.09.11 18:00");
+		Event event = new Event("event1", startDate, endDate, true);
+		Event event2 = new Event("event2", startDate2, endDate2, true);
+		firstCalendar.addEvent(event);
 		firstCalendar.addEvent(event2);
-		firstCalendar.addEvent(event3);
-		firstUser.shareCalendar();
-		Date testDay = secondUser.parseStringToDate("24.09.11 00:00");
-		ArrayList<Event> eventsVisibleToSecondUser = secondUser.getVisibleEventsFrom(firstUser, testDay);
-		ArrayList<Event> publicEventsOnThatDay = new ArrayList<Event>();
-		ArrayList<Event> allEvents = firstCalendar.getEvents();
-		publicEventsOnThatDay.add(event1);
-		publicEventsOnThatDay.add(event2);
-		assertEquals(eventsVisibleToSecondUser, publicEventsOnThatDay);
-		assertNotSame(eventsVisibleToSecondUser, allEvents);
+		Date testDay = secondUser.parseStringToDate("24.09.11 13:30");
+		eventsVisibleToSecondUser = secondUser.getVisibleEventsOnSpecificDayFrom(firstUser, testDay);
+		assertTrue(eventsVisibleToSecondUser.contains(event));
+		assertTrue(eventsVisibleToSecondUser.contains(event2));
 	}
 
 }

@@ -5,18 +5,19 @@
 <fullyQualifiedTypeName name="java.lang.Comparable"/>
 <fullyQualifiedTypeName name="java.util.Calendar"/>
 <fullyQualifiedTypeName name="warmupTests.CalendarTest"/>
-<fullyQualifiedTypeName name="java.lang.Iterable"/>
 <fullyQualifiedTypeName name="org.junit.Test"/>
 <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
 <fullyQualifiedTypeName name="org.junit.Before"/>
-<fullyQualifiedTypeName name="warmup.User"/>
 <fullyQualifiedTypeName name="java.sql.Date"/>
-<fullyQualifiedTypeName name="warmup.Event"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="warmup.Calendar"/>
 <fullyQualifiedTypeName name="warmup.CalendarApplication"/>
-<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="warmup.ForTestingOnly"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="java.util.PriorityQueue"/>
-<fullyQualifiedTypeName name="warmup.ForTestingOnly"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.lang.Iterable"/>
+<fullyQualifiedTypeName name="warmup.Event"/>
+<fullyQualifiedTypeName name="javax.xml.stream.events.EndDocument"/>
+<fullyQualifiedTypeName name="warmup.User"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>

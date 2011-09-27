@@ -12,7 +12,6 @@ import warmup.*;
 public class CalendarTest {
 	
 	private Calendar cal;
-	private CalendarApplication calApp;
 	private User owner;
 	private Date firstStartDate;
 	private Date firstEndDate;
@@ -21,8 +20,7 @@ public class CalendarTest {
 	
 	@Before
 	public void init() {
-		calApp = new CalendarApplication();
-		owner = calApp.getUsers().get(0);
+		owner = new User("testUser");
 		cal = owner.getCalendar();
 		firstStartDate = owner.parseStringToDate("01.01.01 12:00");
 		firstEndDate = owner.parseStringToDate("01.01.01 13:00");
@@ -31,14 +29,23 @@ public class CalendarTest {
 	}
 	
 	@Test
-	public void shouldHaveNameHome() {
+	public void shouldHaveNameHomeAndOwner() {
 		assertEquals(cal.getName(), "Home");
+		assertEquals(cal.getOwner(), owner);
+	}
+	
+	@Test
+	public void shouldAddEvent() {
+		Event testEvent = new Event("testEvent", firstStartDate, firstEndDate, false);
+		assertTrue(cal.isEmpty());
+		cal.addEvent(testEvent);
+		assertFalse(cal.isEmpty());
 	}
 	
 	@Test
 	public void shouldGetNextEvent() {
-		Event firstEvent = new Event("dinner with your ex", firstStartDate, firstEndDate);
-		Event secondEvent = new Event("secondEvent", secondStartDate, secondEndDate);
+		Event firstEvent = new Event("dinner with your ex", firstStartDate, firstEndDate, false);
+		Event secondEvent = new Event("secondEvent", secondStartDate, secondEndDate, false);
 		cal.addEvent(firstEvent);
 		assertEquals(cal.getNextEvent(), firstEvent);
 		cal.addEvent(secondEvent);
@@ -46,25 +53,22 @@ public class CalendarTest {
 	}
 	
 	@Test
-	public void shouldAddEvent() {
-		Event testEvent = new Event("testEvent", firstStartDate, firstEndDate);
-		assertTrue(cal.isEmpty());
-		cal.addEvent(testEvent);
-		assertFalse(cal.isEmpty());
-	}
-	
-	@Test
 	public void shouldAddSecondEventBeforeFirstEvent() {
 		assertTrue(cal.isEmpty());
-		Event firstEvent = new Event("firstEvent", firstStartDate, firstEndDate);
+		Event firstEvent = new Event("firstEvent", firstStartDate, firstEndDate, false);
 		cal.addEvent(firstEvent);
 		assertEquals(cal.getEvents().size(), 1);
-		Event secondEvent = new Event("secondEvent", secondStartDate, secondEndDate);
+		Event secondEvent = new Event("secondEvent", secondStartDate, secondEndDate, false);
 		cal.addEvent(secondEvent);
 		assertEquals(cal.getEvents().size(), 2);
 		ArrayList<Event> events = cal.getEvents();
 		assertTrue(secondEvent.getStartDate().before(firstEvent.getStartDate()));
 		assertEquals(events.get(0), secondEvent);
+	}
+	
+	@Test
+	public void shouldGetIteratorOfAllEvents() {
+		firstStartDate = owner.parseStringToDate("12.04.95 11:55");
 	}
 	
 }
