@@ -57,18 +57,24 @@ public class Calendar implements Iterable<Event>{
 		while (!events.isEmpty()) {
 			orderedEvents.add(events.poll());
 		}
-		System.out.println(orderedEvents);
 		return orderedEvents.iterator();
 	}
 
-	public Iterator<Event> getEventsAfter(Date startingDate)  {
+	public Iterator<Event> getEventsAfter(User user, Date startingDate)  {
 		ArrayList<Event> iterableEvents = new ArrayList<Event>();
-		for (Event event : this.events) {
-			if (!event.getStartDate().before(startingDate)) {
-				iterableEvents.add(event);
+		if (user.equals(this.owner)) {
+			for (Event event : this.events) {
+				if (!event.getStartDate().before(startingDate)) {
+					iterableEvents.add(event);
+				}
+			}
+		} else {
+			for (Event event : this.publicEvents) {
+				if (!event.getStartDate().before(startingDate)) {
+					iterableEvents.add(event);
+				}
 			}
 		}
-		System.out.println(iterableEvents.iterator());
 		return iterableEvents.iterator();
 	}
 
