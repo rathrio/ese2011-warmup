@@ -33,6 +33,8 @@ public class CalendarTest {
 		firstEndDate = owner.parseStringToDate("01.01.01 13:00");
 		secondStartDate = owner.parseStringToDate("01.01.01 06:00");
 		secondEndDate = owner.parseStringToDate("01.01.01 07:00");
+		thirdStartDate = owner.parseStringToDate("01.01.01 19:00");
+		thirdEndDate = owner.parseStringToDate("01.01.01 23:00");
 	}
 	
 	@Test
@@ -103,7 +105,7 @@ public class CalendarTest {
 		
 		thirdStartDate = owner.parseStringToDate("30.04.95 15:00");
 		thirdEndDate = owner.parseStringToDate("02.05.95 18:00");
-		Event thirdEvent = new Event("thirdEvent", secondStartDate, secondEndDate, true);
+		Event thirdEvent = new Event("thirdEvent", thirdStartDate, thirdEndDate, true);
 		
 		cal.addEvent(firstEvent);
 		cal.addEvent(secondEvent);
@@ -126,7 +128,7 @@ public class CalendarTest {
 		
 		thirdStartDate = owner.parseStringToDate("30.04.95 15:00");
 		thirdEndDate = owner.parseStringToDate("02.05.95 18:00");
-		Event thirdEvent = new Event("thirdEvent", secondStartDate, secondEndDate, true);
+		Event thirdEvent = new Event("thirdEvent", thirdStartDate, thirdEndDate, true);
 		
 		cal.addEvent(firstEvent);
 		cal.addEvent(secondEvent);
